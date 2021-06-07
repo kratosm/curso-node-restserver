@@ -1,55 +1,45 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Google Singin</title>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
 
-      <meta name="google-signin-client_id" content="592257551802-itvpkc9d46fbrai3eqh3qrorco8uhlb3.apps.googleusercontent.com">
-  </head>
-  <body>
-    <h1>Google Singin</h1>
-    <hr>
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
 
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
+    Fore more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+  -->
+  <base href="/">
 
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Sitio web creado en flutter web">
 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="vertical_landing_page">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-    <script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
-      var url = (window.location.hostname.includes('localhost'))
-                ? 'http://localhost:8080/api/auth/google'
-                : 'https://webserver-node-amf.herokuapp.com/api/auth/google'
-
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    
-        var id_token = googleUser.getAuthResponse().id_token;
-        const data = {id_token};
-
-        fetch( url, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        })
-        .then( resp => resp.json())
-        .then(data => console.log('Nuestro server', data))
-        .catch(console.log);
-      }
-
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-      }
-    </script>
-  </body>
+  <title>vertical_landing_page</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('flutter-first-frame', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js?v=2988849384');
+      });
+    }
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
 </html>
