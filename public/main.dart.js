@@ -17626,7 +17626,7 @@ _.b=b
 _.c=0
 _.e=_.d=null},
 alf:function(){var s,r=$.pq()
-r.gwC(r).qJ$="http://localhost:8080/api"
+r.gwC(r).qJ$="https://webserver-node-amf.herokuapp.com/api"
 r=$.pq()
 r=r.gwC(r)
 s=$.qN
