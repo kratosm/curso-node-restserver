@@ -1,7 +1,17 @@
 const {request, response} = require('express');
+const { generarJWT } = require('../helpers/generar-jwt');
 const bcryptjs = require('bcryptjs')
 
 const Usuario = require('../models/usuario');
+
+const getUsuarioPorId = async(req = request, res = response) => {
+    console.log('recogiendo usuario');
+    const { id } = req.params;
+
+    const usuario = await Usuario.findById( id );
+
+    res.json(usuario);
+}
 
 const usuariosGet = async (req=request, res = response) => {
     const { limite = 5, desde = 0} = req.query;
@@ -18,8 +28,13 @@ const usuariosGet = async (req=request, res = response) => {
         total, usuarios
     });
 }
+
+
 const usuariosPost = async (req, res = response) => {
+    console.log('Crear usuario');
     const {nombre, correo, password, role} = req.body;
+
+    console.log(role);
 
     const usuario = new Usuario({nombre, correo, password, role});
 
@@ -32,8 +47,11 @@ const usuariosPost = async (req, res = response) => {
     //Guardar en BD
     await usuario.save();
 
+    const token = await generarJWT(usuario.id);
+
     res.status(201).json({
-        usuario
+        usuario,
+        token
     });
 }
 const usuariosPut = async (req, res = response) => {
@@ -46,7 +64,7 @@ const usuariosPut = async (req, res = response) => {
         const salt = bcryptjs.genSaltSync();
         resto.password = bcryptjs.hashSync(password, salt);
     }
-
+    console.log(resto.nombre);
     const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
     res.json(usuario);
@@ -69,6 +87,7 @@ const usuariosDelete = async (req, res = response) => {
 }
 
 module.exports = {
+    getUsuarioPorId,
     usuariosGet,
     usuariosPost,
     usuariosPut,

@@ -3,19 +3,23 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
+  "assets/AssetManifest.json": "54830383cc824c7640fa1efc5c8a5967",
+"assets/assets/loader.gif": "74b84c61dc457547ce5c674e0ef82c19",
+"assets/assets/no-image.jpg": "a210d1794c8aeaf9762d5abde0ae360b",
+"assets/assets/twitter-bg.png": "6aa5afbc56e530e0fd7676ff3fdf81b4",
+"assets/assets/twitter-white-logo.png": "659038677a13536aeb6e77d706764d67",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
-"assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
-"assets/NOTICES": "2986f2af4f97cddc81eb8766170a2102",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
+"assets/NOTICES": "c98282e5d21af27ce6b3cf156dc90fcb",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "45f0559341b18abf5b241ef2d739a19f",
-"/": "45f0559341b18abf5b241ef2d739a19f",
-"main.dart.js": "f4429f5e0601dd6927fda8c6e90d345b",
-"manifest.json": "d1db7670e9ef7f3bb8757d4b6ddf4ff2",
-"version.json": "be0912afcee368bcd1e0211e6051b5c7"
+"index.html": "24a344a1aa79b6d375bf249439f1666d",
+"/": "24a344a1aa79b6d375bf249439f1666d",
+"main.dart.js": "3fbc9d0b2a93135691c7e628def83d51",
+"manifest.json": "f4f5e8d8662e690c6ae17bf42949a14e",
+"version.json": "d820d55c9fae0df9934ad39f00115d73"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -33,7 +37,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });

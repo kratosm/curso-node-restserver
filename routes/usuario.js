@@ -5,13 +5,22 @@ const { validarCampos, validarJWT, esAdminRole, tieneRole } = require('../middle
 
 const { existeUsuarioPorId, esRoleValido, correoExiste } = require("../helpers/bd-validators");
 
-const { usuariosGet,
+const { getUsuarioPorId,
+        usuariosGet,
         usuariosPut,
         usuariosPost,
         usuariosDelete,
         usuariosPatch } = require("../controllers/usuarioController");
 
 const router = Router();
+
+router.get('/:id',[
+    // validarJWT,
+    // esAdminRole,
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
+    validarCampos
+], getUsuarioPorId );
 
 router.get('/', usuariosGet);
 
@@ -21,7 +30,7 @@ router.post('/', [
     check('password', 'La contraseña debe tener más de 6 letras').isLength({min:6}),
     check('correo','El correo no tiene el formato correcto').isEmail(),
     check('correo').custom( correoExiste ),
-    check('role').custom( esRoleValido ),
+    // check('role').custom( esRoleValido ),
     validarCampos
 ], usuariosPost);
 

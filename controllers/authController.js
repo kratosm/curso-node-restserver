@@ -44,6 +44,18 @@ const login = async(req= request, res = response)=>{
             msg:'Hable con el administrador'
         })
     }
+
+    const validarTokenUsuario = async (req, res = response ) => {
+
+    // Generar el JWT
+    const token = await generarJWT( req.usuario._id );
+    
+    res.json({
+        usuario: req.usuario,
+        token: token,
+    })
+
+}
     
 }
 
@@ -92,8 +104,19 @@ const googleSingin = async (req, res= response) => {
 
 }
 
+const validarTokenUsuario = async (req, res = response ) => {
+    // Generar el JWT
+    const token = await generarJWT( req.usuario._id );
+    
+    res.json({
+        usuario: req.usuario,
+        token: token,
+    });
+}
+
 
 module.exports = {
     login,
-    googleSingin
+    googleSingin,
+    validarTokenUsuario
 }

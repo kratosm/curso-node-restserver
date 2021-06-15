@@ -5,16 +5,17 @@ const { Categoria } = require('../models');
 //obtenerCategorias - paginado - total - populate
 const obtenerCategorias = async (req, res = response) =>{
     console.log('Categorias');
-    const { desde = 0, limite = 5} = req.query;
+    const { desde = 0, limite = 10} = req.query;
     console.log(limite);
     const categorias = await Categoria.find()
                         .skip(Number(desde))
                         .limit(Number(limite))
                         .populate("usuario");                        
 
-    console.log(limite);
+    console.log(categorias);
+    const total = categorias.length;
 
-    return res.json(categorias);
+    return res.json({total,categorias});
 }
 
 //obtenerCategorias - populate
@@ -29,6 +30,7 @@ const obtenerCategoria = async (req, res = response) =>{
 
 
 const crearCategoria = async (req, res = response) =>{
+    console.log('Creando categoria');
     const nombre = req.body.nombre.toUpperCase();
 
     const categoriaBD = await Categoria.findOne({nombre}).populate("usuario");
